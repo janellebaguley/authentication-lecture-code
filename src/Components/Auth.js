@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import axios from 'axios';
 import {getUser} from '../redux/reducer';
 
 class Auth extends Component {
@@ -19,12 +20,27 @@ class Auth extends Component {
 
     login = (e) => {
         e.preventDefault();
-        //code here
+        axios.post('/api/login', {email: this.state.email, password: this.state.password})
+            .then(res => {
+                // Place user info somewhere (local state, redux state)
+                this.props.getUser(res.data);
+                // Navigate user to dashboard
+                this.props.history.push('/dashboard');
+            })
+            .catch(err => console.log(err));
     }
 
     register = (e) => {
         e.preventDefault();
-        //code here
+        // Run register axios request
+        axios.post('/api/register', {email: this.state.email, password: this.state.password})
+            .then(res => {
+                // Place user info somewhere (local state, redux state)
+                this.props.getUser(res.data);
+                // Navigate user to dashboard
+                this.props.history.push('/dashboard');
+            })
+            .catch(err => console.log(err));
     }
 
     render(){
