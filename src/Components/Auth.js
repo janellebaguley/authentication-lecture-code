@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import {connect} from 'react-redux';
 import {getUser} from '../redux/reducer';
 
@@ -10,6 +11,12 @@ class Auth extends Component {
             password: ''
         }
     }
+    //this componentDidMount will make it so that the user can't go back to the Auth page
+    componentDidMount(){
+        if(this.props.user.email){
+            this.props.history.push('/dashboard')
+        }
+    }
 
     handleInput = e => {
         this.setState({
@@ -19,12 +26,22 @@ class Auth extends Component {
 
     login = (e) => {
         e.preventDefault();
-
+        axios.post('/api/login', {email: this.state.email, password: this.state.password})
+        .then(res => {
+            this.props.getUser(res.data)
+            this.props.history.push('/dashboard')
+        }) 
+        .catch(err => console.log(err))
     }
 
     register = (e) => {
         e.preventDefault();
-
+        axios.post('/api/register', {email: this.state.email, password: this.state.password})
+        .then(res => {
+            this.props.getUser(res.data)
+            this.props.history.push('/dashboard')
+        })
+        .catch(err => console.log(err))
     }
 
     render(){
@@ -43,4 +60,6 @@ class Auth extends Component {
     }
 }
 
-export default connect(null, {getUser})(Auth);
+const mapStateToProps = reduxState => reduxState;
+
+export default connect(mapStateToProps, {getUser})(Auth);

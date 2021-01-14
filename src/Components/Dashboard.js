@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {connect} from 'react-redux';
 import {clearUser} from '../redux/reducer';
 
@@ -6,7 +7,12 @@ const Dashboard = props => {
     // console.log(props)
 
     const logout = () => {
-        //code here
+        axios.get('/api/logout')
+            .then(() => {
+                props.clearUser();
+                props.history.push('/')
+            })
+            .catch(err => console.log(err))
     }
 
     return (
