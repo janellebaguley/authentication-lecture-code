@@ -3,14 +3,10 @@ import {connect} from 'react-redux';
 import {clearUser} from '../redux/reducer';
 
 const Dashboard = props => {
-    console.log(props)
+    // console.log(props)
 
     const logout = () => {
-        // Run the action to clear user from redux state
-        props.clearUser();
-
-        // Navigate the user back to the Auth page
-        props.history.push('/');
+        //code here
     }
 
     return (

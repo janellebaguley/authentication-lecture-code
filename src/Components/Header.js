@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default props => (
+export default () => (
     <header className='main-header'>
         <h1>Sign-me-in</h1>
     </header>
